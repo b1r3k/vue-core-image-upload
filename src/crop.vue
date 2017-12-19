@@ -363,6 +363,7 @@ export default {
     },
     // resize and drag move
     resize(e) {
+      let vm = this;
       e.stopPropagation();
       if (!this.ratio.indexOf(':')) {
           return;
@@ -397,6 +398,7 @@ export default {
         }
         document.removeEventListener('mousemove', move, false);
         document.removeEventListener('mouseup', end, false);
+        vm.$emit('crop-image-updated');
       };
       if (helper.isMobile) {
         document.addEventListener('touchmove', move, false);
@@ -453,6 +455,7 @@ export default {
         }
         document.removeEventListener('mousemove', move, false);
         document.removeEventListener('mouseup', stopMove, false);
+        vm.$emit('crop-image-updated');
       };
       if (isMobile) {
         document.addEventListener('touchmove', move, false);

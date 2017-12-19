@@ -211,6 +211,16 @@
         upload();
       },
 
+      getCropImage() {
+          this.__setData('crop');
+          const cropBox = this.$refs.cropBox;
+          const targetImage = cropBox.getCropImage();
+          this.data.compress = 100 - this.compress;
+          return canvasHelper.crop(targetImage, this.data, (data) => {
+              return data;
+          });
+      },
+
       __setData(type) {
         if (typeof this.data !== 'object') {
           this.data = {};
