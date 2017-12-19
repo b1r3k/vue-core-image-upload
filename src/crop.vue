@@ -137,8 +137,10 @@ import RotateBar from './rotate-bar.vue';
 // set cropbox size in image
 const CROPBOX_PERCENT = 75;
 const isMobile = helper.isMobile;
-const areaWidth = window.innerWidth - 60;
-const areaHeight = window.innerHeight - 110;
+let defaultAreaWidthMargin = 60;
+let defaultAreaHeightMargin = 110;
+const defaultAreaWidth = window.innerWidth - defaultAreaWidthMargin;
+const defaultAreaHeight = window.innerHeight - defaultAreaHeightMargin;
 export default {
   components: {
     ResizeBar,
@@ -164,6 +166,14 @@ export default {
     isRotate: {
       type: [Boolean],
       default: true,
+    },
+    areaWidth: {
+      type: Number,
+      default: defaultAreaWidth,
+    },
+    areaHeight: {
+      type: Number,
+      default: defaultAreaHeight,
     }
   },
 
@@ -241,8 +251,8 @@ export default {
     },
 
     setLayout(w, h) {
-      let H = areaHeight,
-          W = areaWidth,
+      let H = this.areaHeight,
+          W = this.areaWidth,
           width = w,
           height = h,
           marginLeft = 0,
@@ -301,8 +311,8 @@ export default {
           ratioW = this.ratioW,
           ratioH = this.ratioH;
       let cropWidth = imageWidth;
-      if (areaWidth < w) {
-        cropWidth = areaWidth;
+      if (this.areaWidth < w) {
+        cropWidth = this.areaWidth;
       }
       const baseCropWidth = (cropWidth / 100) * CROPBOX_PERCENT;
       const CSSObj = {
@@ -411,6 +421,7 @@ export default {
     },
 
     drag(e) {
+      let vm = this;
       e.preventDefault();
       const $el = this.__find('.image-wrap');
       this.el = $el;
